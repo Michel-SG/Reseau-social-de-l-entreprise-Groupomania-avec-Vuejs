@@ -10,32 +10,31 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" v-if="!Logged">
-            <button class="btn btn-primary">Accueil</button>
+             <router-link to="/"><button class="btn btn-primary">Accueil</button></router-link>
           </li>
-          <li class="nav-item" >
-            <button class="btn btn-primary">Inscription</button>
+          <li class="nav-item" v-if="!Logged">
+            <router-link to="/inscription"><button class="btn btn-primary">Inscription</button></router-link>
           </li>
-          <li class="nav-item" >
-            <p>Bonjour  !</p>
+          <li class="nav-item" v-if="Logged">
+            <p>Bonjour {{ userPseudo }} !</p>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item" v-if="Logged">
             <button class="btn btn-primary">The WALL</button>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item" v-if="Logged">
             <button class="btn btn-primary">Mon profil</button>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item" v-if="Logged">
             <button class="btn btn-primary">Admin</button>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item" v-if="Logged">
             <button class="btn btn-primary" v-on:click="logOut ()">Déconnexion</button>
           </li>
         </ul>
       </div>
     </nav>
    
-   
-    <div id="totalView">
+   <div id="totalView">
       <router-view/>
     </div>
   </div>
@@ -46,15 +45,26 @@
 
 export default {
   name: 'App',
+  data () {
+        return{
+            Logged: false,
+            Admin: false,
+            userPseudo: null
+        }        
+    },
   /*components: {
     HelloWorld
   }*/
+    methods:{
+      logOut (){
+        localStorage.clear(); // clear memory
+        window.location.replace("http://localhost:8080/"); //go to the home page
+      }
+    }
 }
 </script>
 
-
-
-<style lang="scss">
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

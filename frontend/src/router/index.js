@@ -10,9 +10,13 @@ const routes = [
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/inscription',
+      name: 'inscription',
+      component: () => import('../views/ViewInscription.vue')
     }
 ]
-
 
 const router = new VueRouter({
   routes

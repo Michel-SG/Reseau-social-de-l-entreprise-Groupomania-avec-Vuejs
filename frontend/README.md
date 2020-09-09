@@ -4,7 +4,14 @@
 ```
 npm install
 ```
-
+## Compile for development
+```
+npm i sass-loader
+```
+## Compile for development
+```
+npm i node-sass
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve
