@@ -15,6 +15,7 @@
 </template>
 <script>
 
+const axios = require('axios').default;
 export default {
     name: 'ConnectionComponent',
     data() {
@@ -23,6 +24,34 @@ export default {
         password: '' , 
         messageNavigation: null,
         }
-    }
+    },
+    methods:{
+    formConnexion (){
+      //const vm = this;
+      if (this.email == null || this.password == null) {
+          return false;
+      }
+      axios.post('http://localhost:3000/api/user/login', {
+              email: this.email,
+              password: this.password,
+      })
+      .then(function (response) {
+          if(response){ 
+              if(response.status == 200 && response.data.token){ // if response is ok!
+                localStorage.setItem('authUser',response.data.userId) //recording userId in the localstorage
+                localStorage.setItem('levelUser',response.data.userLevel) //recording user level in the localstorage
+                localStorage.setItem('authUserToken',response.data.token) //recording user Token in the localstorage
+                localStorage.setItem('userPseudo',response.data.userPseudo) //recording user pseudo in the localstorage
+                window.location.replace("http://localhost:8080/");
+                }else{
+                this.messageNavigation = "Adresse mail ou mot de passe incorrect !";
+              }
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    },
+  }
 }
 </script>
