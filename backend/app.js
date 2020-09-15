@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// middleware to access from diferent Routers
+// middleware to access from different Routers
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/wall',  wallRoutes);

@@ -1,16 +1,17 @@
 <template>
   <div class="connexion">
-    {{messageNavigation}}
-      <h1>Connexion</h1>
+    {{ message }}
+      <h2>Connexion</h2>
       <b-form @submit.prevent="formConnexion">
         <b-form-group id="input-group-1" label-for="input-1" description="">
-          <b-form-input id="input-1" v-model="email" type="email" required pattern="^[^&amp;'<>&quot;()!_$*€£`+=\/;?#]+$" placeholder="Saisissez votre adresse mail..."></b-form-input>
+          <b-form-input id="input-1" type="email" v-model="email" required pattern="^[^&amp;'<>&quot;()!_$*€£`+=\/;?#]+$" placeholder="Saisissez votre adresse mail..."></b-form-input>
         </b-form-group>
         <b-form-group id="input-group-2" label-for="input-2">
-          <b-form-input id="input-2" v-model="password" type="password" required pattern="^[^&amp;'<>&quot;()!_$*€£`+=\/;?#]+$" placeholder="Saisissez votre mot de passe..."></b-form-input>
+          <b-form-input id="input-2" type="password" v-model="password" required pattern="^[^&amp;'<>&quot;()!_$*€£`+=\/;?#]+$" placeholder="Saisissez votre mot de passe..."></b-form-input>
         </b-form-group>
-        <button class="btn btn-primary" type="submit">Connexion</button>
+        <button class="btn btn-primary" type="submit">Envoyer</button>
       </b-form>
+    
   </div>
 </template>
 <script>
@@ -22,12 +23,12 @@ export default {
         return{
         email: '',
         password: '' , 
-        messageNavigation: null,
+        message: null,
         }
     },
     methods:{
-    formConnexion (){
-      //const vm = this;
+    formConnexion (){ //Connected users
+      
       if (this.email == null || this.password == null) {
           return false;
       }
@@ -37,6 +38,7 @@ export default {
       })
       .then(function (response) {
           if(response){ 
+            
               if(response.status == 200 && response.data.token){ // if response is ok!
                 localStorage.setItem('authUser',response.data.userId) //recording userId in the localstorage
                 localStorage.setItem('levelUser',response.data.userLevel) //recording user level in the localstorage
@@ -44,7 +46,7 @@ export default {
                 localStorage.setItem('userPseudo',response.data.userPseudo) //recording user pseudo in the localstorage
                 window.location.replace("http://localhost:8080/");
                 }else{
-                this.messageNavigation = "Adresse mail ou mot de passe incorrect !";
+                this.message = "Adresse mail ou mot de passe incorrect !";
               }
           }
       })

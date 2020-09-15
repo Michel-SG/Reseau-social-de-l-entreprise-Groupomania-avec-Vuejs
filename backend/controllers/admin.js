@@ -14,7 +14,7 @@ exports.getPostToModerate = (req, res, next) => {
       const content = result[0].content //the content of the post we could moderate
       const moderationText = encodeURI(req.body.moderation);
 
-      const newContentModerer = content +'<br/><h6>[MODERATION: '+moderationText+' ]</h6>'; // moderate content
+      const newContentModerer = content +'<br/><h6>[Texte de modération : '+moderationText+' ]</h6>'; // moderate content
           
           // update the post
       var sqlUdatePost = 'UPDATE wall SET content = "'+newContentModerer+'" WHERE id= "'+id+'" ';   
@@ -22,7 +22,6 @@ exports.getPostToModerate = (req, res, next) => {
         if (err) {
           throw err;
         } else {
-          console.log("Ok content mis à jour");
           res.status(200).json(result);  
         }
       });

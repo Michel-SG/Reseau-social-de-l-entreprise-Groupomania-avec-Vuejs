@@ -39,7 +39,6 @@ exports.login = (req, res, next) => {
   mysqlConnection.query(sql, function(err, result) {
     if (err) {
       throw err;
-      res.status(401).json({ error: 'Utilisateur non trouvé !' });
     } else {  
       bcrypt.compare(password, result[0].password)
       .then(valid => {
@@ -47,7 +46,7 @@ exports.login = (req, res, next) => {
           return res.status(401).json({ error: 'Mot de passe incorrect !' });
         }
 
-        //token create 
+        //object with information will be send to frontend 
         res.status(200).json({
           userId: result[0].id, 
           userLevel: result[0].level, 
@@ -56,7 +55,7 @@ exports.login = (req, res, next) => {
           process.env.SECRET_CLE_TOKEN,{ expiresIn: '24h' }) }); 
       
       })
-      .catch(error => res.status(500).json({ error: "<- Erreur 500" }));
+      .catch(error => res.status(500).json({ error }));
     }
   });
 }

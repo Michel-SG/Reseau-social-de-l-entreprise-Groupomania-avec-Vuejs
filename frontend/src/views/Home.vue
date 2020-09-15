@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div id="ConnectionToApi"> Veuillez vous connectez  !</div>
+    <div id="ConnectionToApi"> Veuillez vous connectez !</div>
       <ConnectionComponent />
   </div>
 
@@ -20,8 +20,8 @@ export default {
 <style scoped lang="scss">
 
 #ConnexionToApi{
-  margin-top: 4%;
-  margin-bottom: 2%;
+  margin-top: 5%;
+  margin-bottom: 3%;
   color: red;
 }
 
