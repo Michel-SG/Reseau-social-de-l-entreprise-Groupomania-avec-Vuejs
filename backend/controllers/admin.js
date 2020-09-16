@@ -29,7 +29,7 @@ exports.getPostToModerate = (req, res, next) => {
   });
 };
 
-//seen mark on the new user
+//update new user
 exports.setupSignup = (req, res, next) => {
   const id = req.params.id;
   var sql = 'UPDATE membre SET admin = 1 WHERE id= "'+id+'" ';    
@@ -42,7 +42,7 @@ exports.setupSignup = (req, res, next) => {
   });
 };
 
-//seen mark on the new post
+//update new post
 exports.setupPost = (req, res, next) => {
   const id = req.params.id;
   var sql = 'UPDATE wall SET admin = 1 WHERE id= "'+id+'" ';   

@@ -194,4 +194,5 @@ export default {
 .input-group{ 
     margin-bottom: 3%;
 }
+
 </style>
