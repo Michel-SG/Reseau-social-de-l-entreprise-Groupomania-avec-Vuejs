@@ -85,15 +85,15 @@ export default {
     },
     methods:{
         validerProfil(index,id){ // modification of the profile
-            const vm = this;
+            //const vm = this;
             axios.put('http://localhost:3000/api/admin/setupSignup/'+id,{hello: 'world'},{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })  
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){  
-                    vm.memberDatas.splice(index,1)
+                    this.memberDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur dans la validation !");
                 }
@@ -101,15 +101,15 @@ export default {
             .catch(erreur => console.log(erreur));    
         },
         supprimerProfil(index,id){ // delete profile
-            const vm = this;
+            //const vm = this;
             axios.delete('http://localhost:3000/api/user/profil/'+id,{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })  
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){ 
-                    vm.memberDatas.splice(index,1)
+                    this.memberDatas.splice(index,1)
                 }else{
                         localStorage.setItem("messageNav", "Erreur de suppression !");
                 }
@@ -117,7 +117,7 @@ export default {
             .catch(erreur => console.log(erreur));    
         },
         formModeration(id){ //validation of the form
-            const vm = this;
+           // const vm = this;
             if (this.moderation == null) {
                 return false;
             }
@@ -128,15 +128,15 @@ export default {
                     authorization: localStorage.authUserToken
                     }
                 })
-                .then(function (response) {
+                .then((response)=> {
                     if(response.status == 200){ 
-                        vm.cancelModererPost()
-                        vm.affichageDerniersPosts()
+                        this.cancelModererPost()
+                        this.affichageDerniersPosts()
                     }else{
                         localStorage.setItem("messageNav", "Erreur d'enregistrement côté serveur !");
                     }
                 })
-                .catch(function (error) {
+                .catch((error)=> {
                     console.log(error);
                 });
                 
@@ -168,15 +168,15 @@ export default {
         },
         
         validerPost(index,id){ //seen profile
-            const vm = this;
+            //const vm = this;
             axios.put('http://localhost:3000/api/admin/setupPost/'+id,{hello: 'world'},{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })  // modify the post and accept
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){  
-                    vm.postDatas.splice(index,1)
+                    this.postDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur dans la validation !");
                 }
@@ -184,15 +184,15 @@ export default {
             .catch(erreur => console.log(erreur));    
         },
         deletePost(index,id){ // delete post
-            const vm = this;
+           // const vm = this;
             axios.delete('http://localhost:3000/api/admin/deletePost/'+id,{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })  
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){  
-                    vm.postDatas.splice(index,1)
+                    this.postDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur de suppression !");
                 }

@@ -36,7 +36,7 @@ export default {
               email: this.email,
               password: this.password,
       })
-      .then(function (response) {
+      .then((response)=> {
           if(response){ 
             
               if(response.status == 200 && response.data.token){ // if response is ok!
@@ -50,7 +50,7 @@ export default {
               }
           }
       })
-      .catch(function (error) {
+      .catch((error)=> {
           console.log(error);
       });
     },

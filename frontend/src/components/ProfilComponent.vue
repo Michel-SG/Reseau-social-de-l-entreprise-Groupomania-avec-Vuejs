@@ -40,7 +40,7 @@ export default {
                     authorization: localStorage.authUserToken
                 }
             })
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){ // if the verification is ok
                     localStorage.clear(); // clean localstorage
                     window.location.replace("http://localhost:8080/"); //redirect to the login page

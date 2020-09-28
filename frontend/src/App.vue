@@ -62,10 +62,10 @@ export default {
     }
   },
   beforeMount (){ 
-    const vm = this;
+    //const vm = this;
     if(localStorage.authUser && localStorage.authUserToken){
       this.Logged = true
-      vm.$router.push('wall') //direction to the wall
+      this.$router.push('wall') //direction to the wall
     }
     if(localStorage.authUser && localStorage.levelUser == 4){// Always need to verify if it's the administrator before mounted
       this.Admin = true

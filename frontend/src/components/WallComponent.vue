@@ -75,14 +75,14 @@ export default {
         },
         createImage(file) { //onload file
             var reader = new FileReader();
-            var vm = this;
-            vm.image = new Image();
+            //var vm = this;
+            this.image = new Image();
             reader.onload = (e) => {
-                vm.image = e.target.result;
+                this.image = e.target.result;
             };
             reader.readAsDataURL(file);
             },
-        removeImage: function () { //remove image
+        removeImage: ()=> { //remove image
             this.image = '';
         },
         affichageWall (){ //display the wall
@@ -114,7 +114,7 @@ export default {
                 authorization: localStorage.authUserToken //identification in the localstarage
             }
             }) 
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200){ //if post is well recording
                     window.location.reload(); 
                 }else{

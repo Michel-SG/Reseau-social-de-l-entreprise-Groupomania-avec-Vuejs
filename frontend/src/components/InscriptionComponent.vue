@@ -50,7 +50,7 @@ export default {
                 email: this.email,
                 password: this.password,
                 level: this.level})
-            .then(function (response) {
+            .then((response)=> {
                 if(response.status == 200 && response.data.id){ //signup is ok
                     console.log("inscrioption réussi")
                     localStorage.setItem("messageNav", "Inscription ok, veuillez vous identifer !");
@@ -59,7 +59,7 @@ export default {
                     localStorage.setItem("messageNav", "Erreur dans l'inscription !");
                 }
             })
-            .catch(function (error) {
+            .catch((error)=> {
                 console.log(error);
             });
                 
