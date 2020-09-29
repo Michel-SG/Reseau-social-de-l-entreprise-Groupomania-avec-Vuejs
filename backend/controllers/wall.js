@@ -4,7 +4,7 @@ const mysqlConnection = require("../connectionSql");
 // display all the content on the wall
 exports.getAllTheWall = (req, res, next) => {
     var sql = 'SELECT * FROM wall ORDER BY id DESC'; 
-    mysqlConnection.query(sql, function(err, result) {
+    mysqlConnection.query(sql, (err, result)=> {
         if (err) {
         throw err;
         } else {
@@ -20,14 +20,17 @@ exports.newPost = (req, res, next) => {
   const userId = req.body.userId;
   const imageUrl = req.body.imageUrl;
 
-  var sqlPseudo = 'SELECT pseudo FROM membre WHERE id='+userId;  
-    mysqlConnection.query(sqlPseudo, function(err, result1) {
+  var sqlPseudo = 'SELECT pseudo FROM membre WHERE id= ?'; 
+    const inserts = [userId]
+    mysqlConnection.query(sqlPseudo, inserts, (err, result1)=> {
         const pseudo = result1[0].pseudo 
         if (err) {
         throw err;
         } else { 
-            var insertPost = "INSERT INTO wall (userId, userPseudo, title, content, urlImage, admin) VALUES ('"+userId+"','"+pseudo+"','"+title+"','"+content+"','"+imageUrl+"',0)";
-            mysqlConnection.query(insertPost, function(err, result) {
+            const Admin = 0;
+            var insertPost = "INSERT INTO wall (userId, userPseudo, title, content, urlImage, admin) VALUES (?, ?, ?, ?, ?, ?)";
+            const inserts = [userId, pseudo, title, content, imageUrl, Admin]
+            mysqlConnection.query(insertPost, inserts, (err, result)=> {
                 if (err) {
                 throw err;
                 } else {                

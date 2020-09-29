@@ -4,10 +4,11 @@ const mysqlConnection = require("../connectionSql");
 
 // get post to maderate
 exports.getPostToModerate = (req, res, next) => {
-  const id = encodeURI(req.params.id);
+  const Id = encodeURI(req.params.id);
 
-  var sql = 'SELECT * FROM wall WHERE id= "'+id+'" ';
-  mysqlConnection.query(sql, function(err, result) {
+  var sql = 'SELECT * FROM wall WHERE id= ?';
+  const inserts = [Id];
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
@@ -17,8 +18,9 @@ exports.getPostToModerate = (req, res, next) => {
       const newContentModerer = content +'<br/><h6>[Texte de modération : '+moderationText+' ]</h6>'; // moderate content
           
           // update the post
-      var sqlUdatePost = 'UPDATE wall SET content = "'+newContentModerer+'" WHERE id= "'+id+'" ';   
-      mysqlConnection.query(sqlUdatePost, function(err, result) {
+      var sqlUdatePost = 'UPDATE wall SET content = ? WHERE id= ?';   
+      const inserts = [newContentModerer, Id];
+      mysqlConnection.query(sqlUdatePost, inserts, (err, result)=> {
         if (err) {
           throw err;
         } else {
@@ -31,9 +33,11 @@ exports.getPostToModerate = (req, res, next) => {
 
 //update new user
 exports.setupSignup = (req, res, next) => {
-  const id = req.params.id;
-  var sql = 'UPDATE membre SET admin = 1 WHERE id= "'+id+'" ';    
-  mysqlConnection.query(sql, function(err, result) {
+  const Id = req.params.id;
+  const Admin = 1;
+  var sql = 'UPDATE membre SET admin = ? WHERE id= ?';
+  const inserts = [Admin, Id];    
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
@@ -44,9 +48,11 @@ exports.setupSignup = (req, res, next) => {
 
 //update new post
 exports.setupPost = (req, res, next) => {
-  const id = req.params.id;
-  var sql = 'UPDATE wall SET admin = 1 WHERE id= "'+id+'" ';   
-  mysqlConnection.query(sql, function(err, result) {
+  const Id = req.params.id;
+  const Admin = 1;
+  var sql = 'UPDATE wall SET admin = ? WHERE id= ?'; 
+  const inserts = [Admin, Id];     
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
@@ -57,9 +63,10 @@ exports.setupPost = (req, res, next) => {
  
  //delete the post without validated 
 exports.deletePost = (req, res, next) => {
-  const id = req.params.id;
-  var sql = 'DELETE FROM wall WHERE id= "'+id+'" ';    
-  mysqlConnection.query(sql, function(err, result) {
+  const Id = req.params.id;
+  var sql = 'DELETE FROM wall WHERE id= ?';
+  const inserts = [Id];    
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
@@ -70,8 +77,10 @@ exports.deletePost = (req, res, next) => {
 
 // get all last post
 exports.getAllLastPost = (req, res, next) => {
-  var sql = 'SELECT * FROM wall WHERE admin= 0 ';    
-  mysqlConnection.query(sql, function(err, result) {
+  const Admin = 0;
+  var sql = 'SELECT * FROM wall WHERE admin= ?';
+  const inserts = [Admin];       
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
@@ -82,8 +91,10 @@ exports.getAllLastPost = (req, res, next) => {
 
 // get all last signup
 exports.getAllLastSignup = (req, res, next) => {
-  var sql = 'SELECT * FROM membre WHERE admin= 0 ';   
-  mysqlConnection.query(sql, function(err, result) {
+  const Admin = 0;
+  var sql = 'SELECT * FROM membre WHERE admin= ?';
+  const inserts = [Admin];    
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {

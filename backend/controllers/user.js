@@ -9,16 +9,19 @@ exports.signup = (req, res, next) => {
 const pseudo = encodeURI(req.body.pseudo);
 const email = encodeURI(req.body.email);
 const level = encodeURI(req.body.level);
-var sqlMetier = 'SELECT metier FROM user_function WHERE id='+level;  
-  mysqlConnection.query(sqlMetier, function(err, data1) {
+var sqlMetier = 'SELECT metier FROM user_function WHERE id= ?'; 
+const inserts = [level]; 
+  mysqlConnection.query(sqlMetier,inserts, (err, data1)=> {
   const metier = data1[0].metier 
     if (err) {
       throw err;
     } else {
     
-      bcrypt.hash(req.body.password, 10, function(err, hash) {
-      var sql = "INSERT INTO membre (pseudo, email, password, level, metier,admin) VALUES ('"+pseudo+"','"+email+"','"+hash+"','"+req.body.level+"','"+metier+"',0)";
-        mysqlConnection.query(sql, function(err, newdata) {
+      bcrypt.hash(req.body.password, 10, (err, hash)=> {
+        const Admin = 0;
+        var sql = "INSERT INTO membre (pseudo, email, password, level, metier,admin) VALUES (?, ?, ?, ?, ?, ?)";
+        const inserts = [pseudo, email,hash, req.body.level, metier, Admin];
+        mysqlConnection.query(sql, inserts, (err, newdata)=> {
           if (err) {
            throw err;
           } else {
@@ -35,8 +38,9 @@ exports.login = (req, res, next) => {
 
   const email = req.body.email;
   const password = req.body.password;
-  var sql = 'SELECT * FROM membre WHERE email = "'+email+'" ';
-  mysqlConnection.query(sql, function(err, result) {
+  var sql = 'SELECT * FROM membre WHERE email = ?';
+  const inserts = [email]; 
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {  
@@ -62,10 +66,12 @@ exports.login = (req, res, next) => {
 
 //display one user (profile)
 exports.getOneUser = (req, res, next) => {
-  const idUser = encodeURI(req.params.userId);
-  var sqlAllFromMembre = 'SELECT * FROM membre WHERE id ='+idUser;  
-  var sqlFonctionFromMembre = 'SELECT metier FROM user_function WHERE id= '+sqlAllFromMembre.level
-  mysqlConnection.query(sqlAllFromMembre, function(err, result) {
+  //const idUser = encodeURI(req.params.userId);
+  const idUser = req.params.userId;
+  var sqlAllFromMembre = 'SELECT * FROM membre WHERE id = ?'; 
+  const inserts = [idUser];  
+  //var sqlFonctionFromMembre = 'SELECT metier FROM user_function WHERE id= '+sqlAllFromMembre.level
+  mysqlConnection.query(sqlAllFromMembre,inserts, (err, result)=> {
     if (err) {
       throw err;
     } else { 
@@ -77,10 +83,12 @@ exports.getOneUser = (req, res, next) => {
 
 //delete user and his post
 exports.deleteOneUser = (req, res, next) => {
-  const idUser = encodeURI(req.params.userId);
+  //const idUser = encodeURI(req.params.userId);
+  const idUser = req.params.userId;
      
-  var sql = 'DELETE wall, membre FROM membre INNER JOIN wall ON membre.id = wall.userId WHERE membre.id = '+idUser;
-  mysqlConnection.query(sql, function(err, result) {
+  var sql = 'DELETE wall, membre FROM membre INNER JOIN wall ON membre.id = wall.userId WHERE membre.id = ?';
+  const inserts = [idUser];
+  mysqlConnection.query(sql, inserts, (err, result)=> {
     if (err) {
       throw err;
     } else {
