@@ -4,8 +4,8 @@ SET NAMES utf8;
 
 
 -- create database of the project 
-CREATE DATABASE IF NOT EXISTS `GROUPOMANIADATABASES`;
-USE `GROUPOMANIADATABASES`;
+CREATE DATABASE IF NOT EXISTS `GROUPOMANIABASE`;
+USE `GROUPOMANIABASE`;
 
 -- create different tables in the database
 

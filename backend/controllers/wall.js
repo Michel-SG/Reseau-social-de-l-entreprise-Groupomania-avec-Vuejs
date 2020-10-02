@@ -17,9 +17,8 @@ exports.getAllTheWall = (req, res, next) => {
 exports.newPost = (req, res, next) => {
   const title =   encodeURI(req.body.title);
   const content = encodeURI(req.body.content);
-  const userId = req.body.userId;
+  const userId = req.userId;
   const imageUrl = req.body.imageUrl;
-
   var sqlPseudo = 'SELECT pseudo FROM membre WHERE id= ?'; 
     const inserts = [userId]
     mysqlConnection.query(sqlPseudo, inserts, (err, result1)=> {

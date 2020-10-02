@@ -79,7 +79,7 @@ export default {
             memberDatas: null,
             postDatas: null,
             id: null,
-            moderationEnCours: null,
+            moderationEnCours: false,
             moderation: null
         }
     },
@@ -92,7 +92,7 @@ export default {
                 }
             })  
             .then((response)=> {
-                if(response.status == 200){  
+                if(response.status === 200){  
                     this.memberDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur dans la validation !");
@@ -108,7 +108,7 @@ export default {
                 }
             })  
             .then((response)=> {
-                if(response.status == 200){ 
+                if(response.status === 200){ 
                     this.memberDatas.splice(index,1)
                 }else{
                         localStorage.setItem("messageNav", "Erreur de suppression !");
@@ -129,7 +129,7 @@ export default {
                     }
                 })
                 .then((response)=> {
-                    if(response.status == 200){ 
+                    if(response.status === 200){ 
                         this.cancelModererPost()
                         this.affichageDerniersPosts()
                     }else{
@@ -175,7 +175,7 @@ export default {
                 }
             })  // modify the post and accept
             .then((response)=> {
-                if(response.status == 200){  
+                if(response.status === 200){  
                     this.postDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur dans la validation !");
@@ -191,7 +191,7 @@ export default {
                 }
             })  
             .then((response)=> {
-                if(response.status == 200){  
+                if(response.status === 200){  
                     this.postDatas.splice(index,1)
                 }else{
                     localStorage.setItem("messageNav", "Erreur de suppression !");

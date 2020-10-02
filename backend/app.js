@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('cookie-session')
 require('dotenv').config();
 
 const adminRoutes = require('./routes/admin');
@@ -14,6 +15,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+app.use(session({
+  secret: "s3Cur3",
+  cookie: { secure: true,
+            httpOnly: true,
+            domain: 'http://localhost:3000',
+          }
+  })
+);
 
 app.use(bodyParser.json());
 

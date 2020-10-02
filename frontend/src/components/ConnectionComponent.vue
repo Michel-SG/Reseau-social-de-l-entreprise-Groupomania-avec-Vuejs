@@ -29,7 +29,7 @@ export default {
     methods:{
     formConnexion (){ //Connected users
       
-      if (this.email == null || this.password == null) {
+      if (this.email === null || this.password === null) {
           return false;
       }
       axios.post('http://localhost:3000/api/user/login', {
@@ -39,8 +39,10 @@ export default {
       .then((response)=> {
           if(response){ 
             
-              if(response.status == 200 && response.data.token){ // if response is ok!
-                localStorage.setItem('authUser',response.data.userId) //recording userId in the localstorage
+              if(response.status === 200 && response.data.token){ // if response is ok!
+                //var authUser = response.data.userId
+                //console.log(authUser)
+                //localStorage.setItem('authUser',response.data.userId) //recording userId in the localstorage
                 localStorage.setItem('levelUser',response.data.userLevel) //recording user level in the localstorage
                 localStorage.setItem('authUserToken',response.data.token) //recording user Token in the localstorage
                 localStorage.setItem('userPseudo',response.data.userPseudo) //recording user pseudo in the localstorage

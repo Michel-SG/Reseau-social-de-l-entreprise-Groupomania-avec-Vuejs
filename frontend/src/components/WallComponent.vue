@@ -45,6 +45,7 @@
     </div>
 </template>
 <script>
+
 const axios = require('axios').default;
 
 export default {
@@ -62,8 +63,11 @@ export default {
         }        
     },
     mounted() {
-        if(localStorage.authUser) {
-            this.userId = localStorage.authUser;
+        if( localStorage.authUserToken) {
+            this.userId = localStorage.authUserToken;
+            
+        }else{
+            console.log("authUser n'est pas trouvé")
         }
     },
     methods:{
@@ -82,7 +86,7 @@ export default {
             };
             reader.readAsDataURL(file);
             },
-        removeImage: ()=> { //remove image
+        removeImage: function () { //remove image
             this.image = '';
         },
         affichageWall (){ //display the wall
@@ -101,7 +105,7 @@ export default {
             this.formWallActif = true 
         },
         formPostToWall (){ //post on the wall
-            if (this.title == null || this.content == null) { //not validation if title and content are NULL
+            if (this.title === null || this.content === null) { //not validation if title and content are NULL
                 return false;
             }
             axios.post('http://localhost:3000/api/wall/',{
@@ -114,8 +118,9 @@ export default {
                 authorization: localStorage.authUserToken //identification in the localstarage
             }
             }) 
-            .then((response)=> {
-                if(response.status == 200){ //if post is well recording
+            .then(function (response) {
+                console.log(response);
+                if(response.status === 200){ //if post is well recording
                     window.location.reload(); 
                 }else{
                     localStorage.setItem("messageNav", "Erreur dans le traitement sur le serveur !");
@@ -128,7 +133,7 @@ export default {
     },
     beforeMount(){ 
         this.affichageWall() 
-        if(localStorage.authUser && localStorage.levelUser == 4){//Always need to verify if it's the administrator before mounted
+        if( localStorage.authUserToken && localStorage.levelUser == 4){//Always need to verify if it's the administrator before mounted
         this.Admin = true
         }
     }

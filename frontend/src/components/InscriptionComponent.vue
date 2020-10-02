@@ -42,7 +42,7 @@ export default {
     },
     methods:{
         formInscription (){ //signup users 
-            if (this.pseudo == null || this.email == null || this.password == null || this.level == null) {
+            if (this.pseudo === null || this.email === null || this.password === null || this.level === null) {
                 return false;
             }
             axios.post('http://localhost:3000/api/user/signup', {
@@ -51,7 +51,7 @@ export default {
                 password: this.password,
                 level: this.level})
             .then((response)=> {
-                if(response.status == 200 && response.data.id){ //signup is ok
+                if(response.status === 200 && response.data.id){ //signup is ok
                     console.log("inscrioption réussi")
                     localStorage.setItem("messageNav", "Inscription ok, veuillez vous identifer !");
                     window.location.replace("http://localhost:8080/"); //redirect to the login page

@@ -66,11 +66,10 @@ exports.login = (req, res, next) => {
 
 //display one user (profile)
 exports.getOneUser = (req, res, next) => {
-  //const idUser = encodeURI(req.params.userId);
-  const idUser = req.params.userId;
+  const idUser = req.userId; 
+  console.log(idUser)
   var sqlAllFromMembre = 'SELECT * FROM membre WHERE id = ?'; 
   const inserts = [idUser];  
-  //var sqlFonctionFromMembre = 'SELECT metier FROM user_function WHERE id= '+sqlAllFromMembre.level
   mysqlConnection.query(sqlAllFromMembre,inserts, (err, result)=> {
     if (err) {
       throw err;
@@ -83,9 +82,7 @@ exports.getOneUser = (req, res, next) => {
 
 //delete user and his post
 exports.deleteOneUser = (req, res, next) => {
-  //const idUser = encodeURI(req.params.userId);
-  const idUser = req.params.userId;
-     
+  const idUser = req.userId;    
   var sql = 'DELETE wall, membre FROM membre INNER JOIN wall ON membre.id = wall.userId WHERE membre.id = ?';
   const inserts = [idUser];
   mysqlConnection.query(sql, inserts, (err, result)=> {

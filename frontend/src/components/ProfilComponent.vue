@@ -13,6 +13,7 @@
     </div>
 </template>
 <script>
+
 const axios = require('axios').default;
 export default {
   name: 'ProfilComponent',
@@ -26,22 +27,27 @@ export default {
     },
     methods:{
         affichageProfil (){ //display profile
-            axios.get('http://localhost:3000/api/user/profil/'+localStorage.authUser,{
+            axios.get('http://localhost:3000/api/user/profil/',{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })  
-            .then(response => this.memberDatas = response.data) //collect the informations about user
+            .then((response)=> {
+                this.memberDatas = response.data
+                console.log(this.memberDatas[0].id)
+                }) //collect the informations about user
+                       
             .catch(error => console.log(error));
+            
         },
         supprimerProfil (){ //delete profile
-            axios.delete('http://localhost:3000/api/user/profil/'+localStorage.authUser,{
+            axios.delete('http://localhost:3000/api/user/profil',{
                 headers: {
                     authorization: localStorage.authUserToken
                 }
             })
             .then((response)=> {
-                if(response.status == 200){ // if the verification is ok
+                if(response.status === 200){ // if the verification is ok
                     localStorage.clear(); // clean localstorage
                     window.location.replace("http://localhost:8080/"); //redirect to the login page
                 }  
@@ -51,7 +57,7 @@ export default {
     },
     beforeMount(){ 
         this.affichageProfil()
-        if(localStorage.authUser && localStorage.levelUser == 4){// Always need to verify if it's the administrator before mounted
+        if(localStorage.authUserToken && localStorage.levelUser == 4){// Always need to verify if it's the administrator before mounted
         this.Admin = true
         }
     }
