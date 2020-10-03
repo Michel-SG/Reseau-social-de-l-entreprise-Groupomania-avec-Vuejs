@@ -67,7 +67,6 @@ exports.login = (req, res, next) => {
 //display one user (profile)
 exports.getOneUser = (req, res, next) => {
   const idUser = req.userId; 
-  console.log(idUser)
   var sqlAllFromMembre = 'SELECT * FROM membre WHERE id = ?'; 
   const inserts = [idUser];  
   mysqlConnection.query(sqlAllFromMembre,inserts, (err, result)=> {
